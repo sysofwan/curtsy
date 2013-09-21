@@ -9,14 +9,6 @@
     android:background="@xml/background_main_repeating"
     tools:context=".MainActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher" />
-
     <RelativeLayout
         android:layout_width="200dp"
         android:layout_height="150dp"
@@ -24,5 +16,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp" >
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="144dp"
+        android:src="@drawable/curtsy_header" />
 
 </RelativeLayout>
