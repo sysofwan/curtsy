@@ -18,5 +18,30 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override
+	public void onPause() {
+		
+		
+	}
+	
+	@Override
+	public void onResume() {
+		
+		
+	}
+	
+	@Override
+	public void onStart() {
+		
+		
+	}
+	
+	@Override
+	public void onStop() {
+		
+		
+	}
+	
 
 }
