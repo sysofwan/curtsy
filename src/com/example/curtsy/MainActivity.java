@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -19,30 +20,31 @@ import android.widget.TextView;
 import com.facebook.*;
 import com.facebook.model.*;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 		final String TAG = "MainActivity";
+		public static GraphUser CurrUser;
+		//private MainFragment mainFragment;
 
 	  @Override
 	  public void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG,TAG +"1");
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
-    	Log.d(TAG,TAG +"2");
-        try {/////////////////////////
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.curtsy", 
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", "KEY" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                }
-        } catch (NameNotFoundException e) {
 
-        } catch (NoSuchAlgorithmException e) {
-
-        }/////////////////////
-	    // start Facebook Login
+	    /*
+	    if (savedInstanceState == null) {
+	        // Add the fragment on initial activity setup
+	        mainFragment = new MainFragment();
+	        getSupportFragmentManager()
+	        .beginTransaction()
+	        .add(android.R.id.content, mainFragment)
+	        .commit();
+	    } else {
+	        // Or set the fragment from restored state info
+	        mainFragment = (MainFragment) getSupportFragmentManager()
+	        .findFragmentById(android.R.id.content);
+	    }*/
+	    
+        
 	    Session.openActiveSession(this, true, new Session.StatusCallback() {
 
 	      // callback when session changes state
@@ -51,7 +53,6 @@ public class MainActivity extends Activity {
 	      public void call(Session session, SessionState state, Exception exception) {
 	    	  Log.d(TAG,"3" + state);
 	        if (session.isOpened()) {
-	        	Log.d(TAG,"4");
 
 	          // make request to the /me API
 	          Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
@@ -60,15 +61,36 @@ public class MainActivity extends Activity {
 	            @Override
 	            public void onCompleted(GraphUser user, Response response) {
 	              if (user != null) {
-	            	  Log.d(TAG,"5");
-	                TextView welcome = (TextView) findViewById(R.id.textView1);
-	                welcome.setText("Hello " + user.getName() + "!");
+	            	CurrUser = user;
+	                Intent intent = new Intent(MainActivity.this, AroundMe.class);
+					startActivity(intent);
 	              }
 	            }
 	          });
 	        }
 	      }
 	    });
+	  }
+	    
+	  @Override
+	  public void onResume() {
+	      super.onResume();
+	  }
+
+
+	  @Override
+	  public void onPause() {
+	      super.onPause();
+	  }
+
+	  @Override
+	  public void onDestroy() {
+	      super.onDestroy();
+	  }
+
+	  @Override
+	  public void onSaveInstanceState(Bundle outState) {
+	      super.onSaveInstanceState(outState);
 	  }
 
 	  @Override
