@@ -20,35 +20,49 @@
 
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edittext_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_above="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
+        android:layout_above="@+id/edittext_email"
+        android:layout_alignRight="@+id/edittext_email"
         android:layout_marginBottom="26dp"
         android:ems="10"
-        android:text="Phone Number"
         android:inputType="phone" />
     
         <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edittext_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:ems="10"
-        android:text="Email Address"
         android:inputType="textEmailAddress" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/button_save"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editText2"
+            android:layout_below="@+id/edittext_email"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="68dp"
             android:text="Save and Continue" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edittext_email"
+            android:layout_alignLeft="@+id/button_save"
+            android:text="Email Address" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edittext_phone"
+            android:layout_alignLeft="@+id/textView2"
+            android:text="Phone Number" />
 
 </RelativeLayout>

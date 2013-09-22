@@ -62,7 +62,7 @@ public class MainActivity extends FragmentActivity {
 	            public void onCompleted(GraphUser user, Response response) {
 	              if (user != null) {
 	            	CurrUser = user;
-	                Intent intent = new Intent(MainActivity.this, AroundMe.class);
+	                Intent intent = new Intent(MainActivity.this, Setup.class);
 					startActivity(intent);
 	              }
 	            }
@@ -98,7 +98,6 @@ public class MainActivity extends FragmentActivity {
 	      super.onActivityResult(requestCode, resultCode, data);
 	      Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 	  }
-	  
 	  
 
 	@Override
