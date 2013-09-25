@@ -1,5 +1,7 @@
 package com.example.curtsy;
 
+import java.util.concurrent.ExecutionException;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
@@ -9,10 +11,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 
 public class Setup extends Activity implements OnLocationAvailableListener {
@@ -21,8 +27,9 @@ public class Setup extends Activity implements OnLocationAvailableListener {
 	private EditText et_email;
 	private LocationFragment locationFragment;
 	private final String REQUEST_PATH = "";
+	private RequestQueue queue;
 	
-	ACTIVITY_TAG = "MainStatusActivity";
+	String ACTIVITY_TAG = "MainStatusActivity";
 
     /**Put a request path (adduser, addemail, addnumber)*/
 //  private static final String STATUS_PATH = "getstatus";
@@ -42,11 +49,18 @@ public class Setup extends Activity implements OnLocationAvailableListener {
 		et_phone = (EditText) findViewById(R.id.edittext_phone);
 		et_email = (EditText) findViewById(R.id.edittext_email);
 		b_save = (Button) findViewById(R.id.button_save);
+        b_save.setOnClickListener(new OnClickListener() {
+        	public void onClick(View view) {
+        		android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        		locationFragment = new LocationFragment();
+              	transaction.add(locationFragment, LocationFragment.FRAGMENT_TAG);
+              	transaction.commit();
+        	}
+        });
+        
 		
-		android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		locationFragment = new LocationFragment();
-      	transaction.add(locationFragment, LocationFragment.FRAGMENT_TAG);
-      	transaction.commit();
+		
+
 		
 		//queue = Volley.newRequestQueue(this);
 	}
@@ -105,18 +119,14 @@ public class Setup extends Activity implements OnLocationAvailableListener {
         Location location = locationFragment.getCurrentLocation();
         /**To get the latitude and longitude is as easy as this!*/
         /**You guys figure out how to get other data! (especially facebook_id)*/
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
+        String lat = Double.valueOf(location.getLatitude()).toString();
+        String lon = Double.valueOf(location.getLongitude()).toString();
         String email = et_email.getText().toString();
         String phone = et_phone.getText().toString();
         String facebook_id = MainActivity.CurrUser.getId();
         String name = MainActivity.CurrUser.getFirstName(); //last name is being ignored for now
-        String call1 = String.format("adduser" + "?facebook_id=%f&name=%s&phone_no=%f&email=%s", facebook_id, name, phone, email);
-        
-        String call2 = String.format("adduser" + "?facebook_id=%f&name=%f&phone_no=%f", facebook_id, name, phone);
-        
-        
-        
+        String call1 = String.format("adduser" + "?facebook_id=%s&name=%s&phone_no=%s&email=%s", facebook_id, name, phone, email);
+        String call2 = String.format("postlocation" + "?facebook_id=%s&lat=%s&lon=%s", facebook_id, lat, lon);        
         
         /**Put a request path (adduser, addemail, addnumber)*/
         //  private static final String STATUS_PATH = "getstatus";
